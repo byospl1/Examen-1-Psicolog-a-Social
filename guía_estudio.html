@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repaso Interactivo: Psicología Social</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .active-tab {
+            border-bottom: 3px solid #3b82f6;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+        .mindmap-node {
+            transition: all 0.2s ease;
+        }
+        .mindmap-node:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="brain-circuit" class="w-8 h-8 text-indigo-300"></i>
+                <div>
+                    <h1 class="text-xl font-bold">Psicología Social — Canvas de Repaso Activo</h1>
+                    <p class="text-xs text-indigo-200">Basado en principios de aprendizaje activo & neurociencia</p>
+                </div>
+            </div>
+            <!-- Quick Stats -->
+            <div class="flex items-center space-x-6 text-sm bg-indigo-950/60 px-4 py-2 rounded-lg border border-indigo-700/50">
+                <div class="text-center">
+                    <span class="block font-bold text-emerald-400" id="mastered-count">0</span>
+                    <span class="text-xs text-slate-300">Dominados</span>
+                </div>
+                <div class="h-6 w-px bg-indigo-700"></div>
+                <div class="text-center">
+                    <span class="block font-bold text-amber-400" id="review-count">0</span>
+                    <span class="text-xs text-slate-300">Por repasar</span>
+                </div>
+                <div class="h-6 w-px bg-indigo-700"></div>
+                <div class="text-center">
+                    <span class="block font-bold text-indigo-300" id="quiz-score-display">0/20</span>
+                    <span class="text-xs text-slate-300">Score Quiz</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="bg-white border-b border-slate-200 sticky top-[72px] z-40 shadow-sm overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-2 md:space-x-8 min-w-max">
+            <button onclick="switchTab('mapa')" id="tab-mapa" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600 active-tab">
+                <i data-lucide="network" class="w-4 h-4"></i> 1. Mapa Conceptual
+            </button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600">
+                <i data-lucide="help-circle" class="w-4 h-4"></i> 2. Quiz Recuperación (Interleaved)
+            </button>
+            <button onclick="switchTab('tabla')" id="tab-tabla" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600">
+                <i data-lucide="table" class="w-4 h-4"></i> 3. Tabla Comparativa
+            </button>
+            <button onclick="switchTab('casos')" id="tab-casos" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600">
+                <i data-lucide="briefcase" class="w-4 h-4"></i> 4. Casos Prácticos
+            </button>
+            <button onclick="switchTab('feynman')" id="tab-feynman" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600">
+                <i data-lucide="message-square" class="w-4 h-4"></i> 5. Método Feynman
+            </button>
+            <button onclick="switchTab('srs')" id="tab-srs" class="tab-btn py-3 px-3 text-sm flex items-center gap-2 text-slate-600 hover:text-indigo-600">
+                <i data-lucide="calendar" class="w-4 h-4"></i> 6. Repetición Espaciada
+            </button>
+        </div>
+    </nav>
+
+    <!-- Content Sections CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- SECTION 1: MAPA CONCEPTUAL (DUAL CODING) -->
+        <section id="sec-mapa" class="tab-content space-y-6">
+            <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="eye" class="w-5 h-5 text-indigo-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-indigo-900">Dual Coding (Codificación Doble)</h3>
+                        <p class="text-sm text-indigo-800">Visualiza la jerarquía teórica y haz clic en los autores para activar/desplegar conceptos clave y ejemplos. Conectar imágenes con definiciones fortalece la retención mnémica.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Hierarchical Diagram -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-8 overflow-x-auto">
+                <div class="text-center font-bold text-lg text-slate-700 bg-slate-100 py-2 rounded-lg border border-slate-300">
+                    PSICOLOGÍA SOCIAL: ORIENTACIONES TEÓRICAS Y AUTORES CLAVE
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- COL 1: PSICOANÁLISIS -->
+                    <div class="border-2 border-purple-200 rounded-xl p-4 bg-purple-50/40 space-y-4">
+                        <div class="bg-purple-600 text-white font-bold p-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
+                            1. Orientación Psicoanalítica
+                        </div>
+
+                        <!-- Autor Node -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-purple-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('freud')">
+                            <div class="flex justify-between items-center font-semibold text-purple-900">
+                                <span>Sigmund Freud</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-purple-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Estructura del Psiquismo & Psicología de las Masas</p>
+                            <div id="freud-detail" class="hidden mt-3 pt-3 border-t border-purple-100 text-xs text-slate-700 space-y-2">
+                                <p><strong>Estructura Psíquica:</strong></p>
+                                <ul class="list-disc pl-4 space-y-1">
+                                    <li><strong class="text-purple-700">Ello:</strong> Principio de placer.</li>
+                                    <li><strong class="text-purple-700">Yo:</strong> Principio de realidad.</li>
+                                    <li><strong class="text-purple-700">Superyó:</strong> Interiorización de normas morales.</li>
+                                </ul>
+                                <p><strong>Psicología de las Masas (Le Bon/Freud):</strong> El líder sustituye al Superyó individual como objeto de orientación emocional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COL 2: CONDUCTISMO / NEOCONDUCTISMO -->
+                    <div class="border-2 border-emerald-200 rounded-xl p-4 bg-emerald-50/40 space-y-4">
+                        <div class="bg-emerald-600 text-white font-bold p-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                            2. Conductismo / Neoconductismo
+                        </div>
+
+                        <!-- Pavlov -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-emerald-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('pavlov')">
+                            <div class="flex justify-between items-center font-semibold text-emerald-900">
+                                <span>Iván Pávlov</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-emerald-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Condicionamiento Clásico</p>
+                            <div id="pavlov-detail" class="hidden mt-3 pt-3 border-t border-emerald-100 text-xs text-slate-700">
+                                <p><strong>Esquema:</strong> EI → RI / EC → RC</p>
+                                <p class="mt-1">Respuesta involuntaria aprendida ante un estímulo neutro previo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Thorndike & Skinner -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-emerald-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('skinner')">
+                            <div class="flex justify-between items-center font-semibold text-emerald-900">
+                                <span>Thorndike & B.F. Skinner</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-emerald-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Condicionamiento Operante & Ley del Efecto</p>
+                            <div id="skinner-detail" class="hidden mt-3 pt-3 border-t border-emerald-100 text-xs text-slate-700 space-y-1">
+                                <p><strong>Thorndike:</strong> Ley del efecto (consecuencia positiva = repetición).</p>
+                                <p><strong>Skinner (Contingencias):</strong></p>
+                                <ul class="list-disc pl-4 space-y-0.5">
+                                    <li>Refuerzo (+): Suma agradable.</li>
+                                    <li>Refuerzo (-): Quita desagradable.</li>
+                                    <li>Castigo (+): Suma desagradable.</li>
+                                    <li>Castigo (-): Quita agradable.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Bandura -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-emerald-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('bandura')">
+                            <div class="flex justify-between items-center font-semibold text-emerald-900">
+                                <span>Albert Bandura (1965)</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-emerald-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Aprendizaje Vicario / Social</p>
+                            <div id="bandura-detail" class="hidden mt-3 pt-3 border-t border-emerald-100 text-xs text-slate-700">
+                                <p>Observación de modelos sin refuerzo directo.</p>
+                                <p class="mt-1 font-semibold">5 Capacidades Humanas:</p>
+                                <ol class="list-decimal pl-4">
+                                    <li>Simbólica</li>
+                                    <li>Previsora</li>
+                                    <li>Vicaria</li>
+                                    <li>Autorreguladora</li>
+                                    <li>Autorreflexiva</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Otros Conductistas -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-emerald-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('otros-cond')">
+                            <div class="flex justify-between items-center font-semibold text-emerald-900">
+                                <span>Miller, Dollard, Hovland, Homans</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-emerald-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Aplicaciones Neoconductistas</p>
+                            <div id="otros-cond-detail" class="hidden mt-3 pt-3 border-t border-emerald-100 text-xs text-slate-700 space-y-1">
+                                <p>• <strong>Miller/Dollard:</strong> Frustración-Agresión e Imitación.</p>
+                                <p>• <strong>Hovland & Janis:</strong> Comunicación persuasiva.</p>
+                                <p>• <strong>Homans:</strong> Intercambio social (coste/beneficio).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COL 3: GESTALT -->
+                    <div class="border-2 border-blue-200 rounded-xl p-4 bg-blue-50/40 space-y-4">
+                        <div class="bg-blue-600 text-white font-bold p-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="shapes" class="w-5 h-5"></i>
+                            3. Orientación Gestáltica
+                        </div>
+                        <div class="text-center text-xs font-semibold text-blue-800 italic bg-blue-100/60 py-1 rounded">
+                            "El todo es más que la suma de sus partes" — Wertheimer
+                        </div>
+
+                        <!-- Kurt Lewin -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-blue-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('lewin')">
+                            <div class="flex justify-between items-center font-semibold text-blue-900">
+                                <span>Kurt Lewin</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-blue-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Teoría de Campo & Investigación-Acción</p>
+                            <div id="lewin-detail" class="hidden mt-3 pt-3 border-t border-blue-100 text-xs text-slate-700 space-y-1">
+                                <p>• <strong>Teoría de Campo:</strong> Fuerzas y metas psicológicas.</p>
+                                <p>• <strong>Dinámica de Grupos:</strong> El grupo como unidad dinámica.</p>
+                                <p>• <strong>Investigación-Acción:</strong> Integración de teoría y praxis.</p>
+                            </div>
+                        </div>
+
+                        <!-- Fritz Heider -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-blue-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('heider')">
+                            <div class="flex justify-between items-center font-semibold text-blue-900">
+                                <span>Fritz Heider</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-blue-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Atribución Causal & Equilibrio Cognitivo</p>
+                            <div id="heider-detail" class="hidden mt-3 pt-3 border-t border-blue-100 text-xs text-slate-700">
+                                <p>• <strong>Atribución Interna:</strong> Intención, habilidad.</p>
+                                <p>• <strong>Atribución Externa:</strong> Suerte, dificultad del entorno.</p>
+                                <p>• <strong>Equilibrio Cognitivo:</strong> Coherencia en interacciones.</p>
+                            </div>
+                        </div>
+
+                        <!-- Leon Festinger -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-blue-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('festinger')">
+                            <div class="flex justify-between items-center font-semibold text-blue-900">
+                                <span>Leon Festinger</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-blue-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Disonancia Cognitiva & Comparación Social</p>
+                            <div id="festinger-detail" class="hidden mt-3 pt-3 border-t border-blue-100 text-xs text-slate-700 space-y-1">
+                                <p>• <strong>Disonancia Cognitiva:</strong> Tensión por creencias contradictorias.</p>
+                                <p>• <strong>Comparación Social:</strong> Evaluar opiniones con otros.</p>
+                                <p>• <strong>Comunicación Informal:</strong> Cohesión del grupo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Solomon Asch & Sherif -->
+                        <div class="mindmap-node bg-white p-3 rounded-lg border border-blue-300 shadow-sm cursor-pointer" onclick="toggleMapDetail('asch')">
+                            <div class="flex justify-between items-center font-semibold text-blue-900">
+                                <span>Solomon Asch & Muzafer Sherif</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-blue-500"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Conformidad Normativa & Juicio Social</p>
+                            <div id="asch-detail" class="hidden mt-3 pt-3 border-t border-blue-100 text-xs text-slate-700">
+                                <p>• <strong>Asch (Conformidad):</strong> La presión mayoritaria modifica la percepción/opinión del individuo.</p>
+                                <p>• <strong>Sherif:</strong> Conflictos grupales y normas sociales.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: QUIZ DE RECUPERACIÓN ACTIVA (INTERLEAVING) -->
+        <section id="sec-quiz" class="tab-content hidden space-y-6">
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r flex justify-between items-center">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="shuffle" class="w-5 h-5 text-amber-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-amber-900">Aprendizaje Intercalado (Interleaving)</h3>
+                        <p class="text-sm text-amber-800">20 Preguntas ordenadas de forma no agrupada entre orientaciones teóricas para obligar al cerebro a discriminar conceptos activamente.</p>
+                    </div>
+                </div>
+                <button onclick="shuffleAndResetQuiz()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reorganizar / Reiniciar
+                </button>
+            </div>
+
+            <div id="quiz-container" class="space-y-4">
+                <!-- Quiz questions dynamic render -->
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: TABLA COMPARATIVA -->
+        <section id="sec-tabla" class="tab-content hidden space-y-6">
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="table" class="w-5 h-5 text-blue-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-blue-900">Sintesis Teórica y Ejemplos de Aplicación</h3>
+                        <p class="text-sm text-blue-800">Utiliza el buscador o los filtros por orientación para comparar autores y sus aportes clave.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-xl border border-slate-200">
+                <input type="text" id="table-search" oninput="filterTable()" placeholder="Buscar autor, concepto o palabra clave..." class="w-full md:w-80 px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div class="flex gap-2">
+                    <button onclick="filterTableCategory('all')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300">Todos</button>
+                    <button onclick="filterTableCategory('Psicoanalítica')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200">Psicoanálisis</button>
+                    <button onclick="filterTableCategory('Conductista')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200">Conductismo</button>
+                    <button onclick="filterTableCategory('Gestáltica')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200">Gestalt</button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl border border-slate-200 overflow-x-auto shadow-sm">
+                <table class="w-full text-left text-sm border-collapse">
+                    <thead class="bg-slate-100 border-b border-slate-200 text-slate-700 uppercase font-semibold text-xs">
+                        <tr>
+                            <th class="p-3">Autor</th>
+                            <th class="p-3">Orientación</th>
+                            <th class="p-3">Concepto Central</th>
+                            <th class="p-3">Ejemplo Aplicado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparison-table-body" class="divide-y divide-slate-100">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- SECTION 4: CASOS APLICADOS -->
+        <section id="sec-casos" class="tab-content hidden space-y-6">
+            <div class="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-r">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="briefcase" class="w-5 h-5 text-purple-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-purple-900">Resolución de Casos Prácticos</h3>
+                        <p class="text-sm text-purple-800">Lee cada escenario real o cotidiano, intenta deducir qué autor y concepto lo explica, y luego revela la solución explicada.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6" id="cases-container">
+                <!-- Dynamic Cases -->
+            </div>
+        </section>
+
+
+        <!-- SECTION 5: AUTOEVALUACIÓN FEYNMAN -->
+        <section id="sec-feynman" class="tab-content hidden space-y-6">
+            <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="message-square" class="w-5 h-5 text-emerald-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-emerald-900">Técnica de Explicación Feynman</h3>
+                        <p class="text-sm text-emerald-800">Explica los conceptos en tus propias palabras usando analogías sencillas, como si le enseñaras a alguien sin formación psicológica. Luego compara con la guía de autoevaluación.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6" id="feynman-container">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+
+
+        <!-- SECTION 6: REPETICIÓN ESPACIADA (SRS) -->
+        <section id="sec-srs" class="tab-content hidden space-y-6">
+            <div class="bg-rose-50 border-l-4 border-rose-600 p-4 rounded-r">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="calendar" class="w-5 h-5 text-rose-600 mt-0.5"></i>
+                    <div>
+                        <h3 class="font-bold text-rose-900">Planificador de Repetición Espaciada</h3>
+                        <p class="text-sm text-rose-800">Tarjetas marcadas como "Dificultad Alta" o "Por Repasar" agrupadas automáticamente según la curva del olvido de Ebbinghaus.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- 24 Horas -->
+                <div class="bg-white p-5 rounded-xl border border-rose-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <span class="font-bold text-rose-700 flex items-center gap-2">
+                            <i data-lucide="clock" class="w-4 h-4"></i> Repaso en 24h
+                        </span>
+                        <span class="text-xs bg-rose-100 text-rose-800 font-semibold px-2 py-0.5 rounded-full" id="count-24h">0 items</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Máxima vulnerabilidad al olvido inicial. Consolida la huella mnémica.</p>
+                    <div id="list-24h" class="space-y-2 text-sm text-slate-700">
+                        <p class="text-xs text-slate-400 italic">No hay conceptos agregados aún. Marca ítems en el quiz o casos.</p>
+                    </div>
+                </div>
+
+                <!-- 3 Días -->
+                <div class="bg-white p-5 rounded-xl border border-amber-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <span class="font-bold text-amber-700 flex items-center gap-2">
+                            <i data-lucide="calendar-days" class="w-4 h-4"></i> Repaso en 3 Días
+                        </span>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full" id="count-3d">0 items</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Refuerzo a medio plazo para afianzar conceptos y estructuras teóricas.</p>
+                    <div id="list-3d" class="space-y-2 text-sm text-slate-700">
+                        <p class="text-xs text-slate-400 italic">Marca ítems para agendar.</p>
+                    </div>
+                </div>
+
+                <!-- 7 Días -->
+                <div class="bg-white p-5 rounded-xl border border-emerald-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <span class="font-bold text-emerald-700 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> Repaso en 7 Días
+                        </span>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full" id="count-7d">0 items</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Fijación en la memoria a largo plazo previo a evaluaciones.</p>
+                    <div id="list-7d" class="space-y-2 text-sm text-slate-700">
+                        <p class="text-xs text-slate-400 italic">Las tarjetas dominadas pasarán a esta fase.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>Guía de Estudio Interactiva — Psicología Social y Orientaciones Teóricas</p>
+            <p>Basado en la bibliografía de Myers (2000) y Pons Diez (2022)</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA STRUCTURES
+
+        // Review Items Database for SRS
+        let srsItems = {
+            review24h: [],
+            review3d: [],
+            review7d: []
+        };
+
+        // Table Data
+        const tableData = [
+            { autor: "Sigmund Freud", orientacion: "Psicoanalítica", concepto: "Estructura del psiquismo (Ello, Yo, Superyó) y Psicología de Masas", ejemplo: "Un candidato político despierta una adhesión emocional masiva donde la muchedumbre reemplaza sus frenos morales (Superyó) por las directrices del líder." },
+            { autor: "Iván Pávlov", orientacion: "Conductista", concepto: "Condicionamiento Clásico (EI→RI, EC→RC)", ejemplo: "Un paciente siente ansiedad (RC) al oler el antiséptico de la clínica (EC), porque antes ese aroma estuvo asociado al dolor de inyecciones (EI)." },
+            { autor: "Edward Thorndike", orientacion: "Conductista", concepto: "Ley del Efecto", ejemplo: "Un empleado propone una idea innovadora y recibe un bono; esto incrementa la probabilidad de que vuelva a proponer ideas en el futuro." },
+            { autor: "B.F. Skinner", orientacion: "Conductista", concepto: "Condicionamiento Operante (Refuerzo/Castigo + y -)", ejemplo: "Para disminuir el ausentismo, una empresa retira el bono mensual (castigo negativo) o impone un llamado de atención (castigo positivo)." },
+            { autor: "Albert Bandura", orientacion: "Neoconductista", concepto: "Aprendizaje Vicario / Social & 5 Capacidades", ejemplo: "Un niño aprende comportamientos agresivos observando a personajes en videojuegos sin recibir ningún premio directo por ello." },
+            { autor: "Miller y Dollard", orientacion: "Neoconductista", concepto: "Teoría de la Frustración-Agresión e Imitación", ejemplo: "Un conductor varado en un tráfico pesado (frustración) reacciona tocando la bocina violenta e insultando a otros (agresión)." },
+            { autor: "Hovland y Janis", orientacion: "Neoconductista", concepto: "Comunicación Persuasiva", ejemplo: "Diseño de campañas de salud pública con testimonios emotivos para cambiar las actitudes sobre el tabaquismo." },
+            { autor: "George Homans", orientacion: "Neoconductista", concepto: "Teoría del Intercambio Social", ejemplo: "Una persona evalúa romper una amistad si siente que aporta todo el apoyo emocional y tiempo (costes) sin recibir reciprocidad (beneficios)." },
+            { autor: "Kurt Lewin", orientacion: "Gestáltica", concepto: "Teoría de Campo, Dinámica de Grupos e Investigación-Acción", ejemplo: "Un consultor psicológico estudia las barreras organizacionales (fuerzas restrictivas) e interviene activamente con el equipo para mejorar el clima laboral." },
+            { autor: "Fritz Heider", orientacion: "Gestáltica", concepto: "Atribución Causal (Interna/Externa) y Equilibrio Cognitivo", ejemplo: "Si apruebas un examen dices que estudiaste mucho (atribución interna); si repruebas dices que la prueba era injusta (atribución externa)." },
+            { autor: "Leon Festinger", orientacion: "Gestáltica", concepto: "Disonancia Cognitiva y Comparación Social", ejemplo: "Un fumador que sabe que el tabaco provoca cáncer experimenta incomodidad psicológica e intenta justificarlo diciendo 'de algo hay que morir'." },
+            { autor: "Solomon Asch", orientacion: "Gestáltica", concepto: "Conformidad Normativa", ejemplo: "Un estudiante coincide públicamente con una respuesta equivocada del grupo en clase por miedo a ser excluido o parecer ridículo." },
+            { autor: "Muzafer Sherif", orientacion: "Gestáltica", concepto: "Conflicto Grupal, Normas y Juicio Social", ejemplo: "Estudio de cómo dos grupos de campistas rivales desarrollan prejuicios hasta que se les impone una meta común que requiere cooperación." }
+        ];
+
+        // 20 Interleaved Questions
+        const rawQuizQuestions = [
+            {
+                id: 1,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "1. Un conductor atribuye haberse pasado una luz roja a que el semáforo estaba mal ubicado y tapado por un árbol. Según Fritz Heider, ¿qué tipo de atribución está realizando?",
+                options: ["Atribución Causal Interna / Personal", "Atribución Causal Externa / Ambiental", "Disonancia Cognitiva", "Conformidad Normativa"],
+                correct: 1,
+                explanation: "Heider divide las causas en Internas (intención, capacidad) y Externas (suerte, entorno, dificultad). Culpar al árbol es una atribución externa."
+            },
+            {
+                id: 2,
+                orientation: "Conductista",
+                type: "schema",
+                question: "2. Completa el esquema del Condicionamiento Clásico de Pávlov aplicado a la fobia al médico:\nIr al médico (Estímulo Neutro) asociado a una Inyección Involuntaria Dolorosa (____). Posteriormente, la sola presencia del Médico pasa a ser el (____) generando percepción de Dolor (RC).",
+                options: ["EI / EC", "EC / EI", "RI / RC", "RC / EC"],
+                correct: 0,
+                explanation: "La inyección es el Estímulo Incondicionado (EI) que genera dolor incondicionado. El médico se convierte en Estímulo Condicionado (EC)."
+            },
+            {
+                id: 3,
+                orientation: "Psicoanalítica",
+                type: "mc",
+                question: "3. Según la Psicología de las Masas de Le Bon y Freud, ¿qué estructura psíquica individual es sustituida temporalmente por la figura del líder?",
+                options: ["El Ello", "El Yo", "El Superyó", "El Inconsciente Colectivo"],
+                correct: 2,
+                explanation: "En la masa, el líder se convierte en el objeto común de orientación emocional y reemplaza temporalmente al Superyó individual (normas e inhibiciones)."
+            },
+            {
+                id: 4,
+                orientation: "Neoconductista",
+                type: "match",
+                question: "4. Empareja la capacidad humana según Albert Bandura con su definición:\n'Permite evaluar la eficacia de la propia conducta posterior a su ejecución'.",
+                options: ["Capacidad Simbólica", "Capacidad Autorreguladora", "Capacidad Previsora", "Capacidad Autorreflexiva"],
+                correct: 3,
+                explanation: "La Capacidad Autorreflexiva permite examinar y evaluar las propias acciones y su eficacia."
+            },
+            {
+                id: 5,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "5. Cuando una persona sostiene simultáneamente las ideas 'Fumar daña gravemente mi salud' y 'Fumo dos paquetes al día', experimenta un malestar conocido por Festinger como:",
+                options: ["Atribución Incoherente", "Disonancia Cognitiva", "Frustración-Agresión", "Efecto de Campo"],
+                correct: 1,
+                explanation: "La Disonancia Cognitiva es el estado de tensión psicológica por sostener cogniciones o creencias contradictorias."
+            },
+            {
+                id: 6,
+                orientation: "Conductista",
+                type: "mc",
+                question: "6. Un jefe retira la obligación de realizar el informe de fin de semana a los empleados que cumplieron sus metas de ventas. Según Skinner, esto es:",
+                options: ["Refuerzo Positivo", "Refuerzo Negativo", "Castigo Positivo", "Castigo Negativo"],
+                correct: 1,
+                explanation: "El Refuerzo Negativo RETIRA un estímulo desagradable (el informe molesto) para AUMENTAR la conducta deseada (ventas)."
+            },
+            {
+                id: 7,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "7. Solomon Asch demostró en sus famosos experimentos de líneas que los individuos suelen cambiar sus respuestas para alinearse con la mayoría. Este fenómeno se denomina:",
+                options: ["Conformidad Normativa", "Facilitación Social", "Investigación-Acción", "Comparación Social"],
+                correct: 0,
+                explanation: "La Conformidad Normativa ocurre cuando la presión social de la mayoría modifica la percepción u opinión expresada por el individuo."
+            },
+            {
+                id: 8,
+                orientation: "Psicoanalítica",
+                type: "match",
+                question: "8. ¿Qué instancia del psiquismo freudiano está regida estrictamente por el 'Principio de Placer'?",
+                options: ["El Yo", "El Superyó", "El Ello", "El Ideal del Yo"],
+                correct: 2,
+                explanation: "El Ello alberga los impulsos primarios y está regido por el principio del placer."
+            },
+            {
+                id: 9,
+                orientation: "Neoconductista",
+                type: "mc",
+                question: "9. ¿Qué postula la Teoría de la Frustración-Agresión formulada por Miller y Dollard (1941)?",
+                options: ["La agresión se aprende únicamente observando modelos violentos.", "La frustración siempre conduce a la agresión, y la agresión es consecuencia inevitable de la frustración.", "La agresión es un impulso biológico del Ello no regulado por el Yo.", "La agresión ocurre solo cuando hay disonancia cognitiva."],
+                correct: 1,
+                explanation: "Miller y Dollard postularon una relación causal biunívoca: toda frustración genera agresión y toda agresión proviene de una frustración."
+            },
+            {
+                id: 10,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "10. ¿Cuál es el postulado epistemológico fundamental de Max Wertheimer y la Orientación Gestáltica?",
+                options: ["La conducta es la suma total de sus reflejos condicionados.", "El todo es más que la suma de sus partes.", "El ambiente moldea la personalidad mediante castigos y recompensas.", "Los grupos son simplemente la suma de los individuos que los componen."],
+                correct: 1,
+                explanation: "La premisa básica de la Gestalt es 'El todo es más que la suma de sus partes'."
+            },
+            {
+                id: 11,
+                orientation: "Conductista",
+                type: "match",
+                question: "11. Thorndike propuso la 'Ley del Efecto'. Esta ley afirma que:",
+                options: ["Un estímulo neutro genera una respuesta biológica automática.", "Si a una acción le sigue una consecuencia positiva, aumenta la probabilidad de que se repita.", "La observación de un modelo basta para modificar el comportamiento.", "Toda causa interna produce un efecto externo observable."],
+                correct: 1,
+                explanation: "La Ley del Efecto sostiene que respuestas seguidas de consecuencias agradables tienden a consolidarse."
+            },
+            {
+                id: 12,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "12. Kurt Lewin introdujo el concepto de 'Investigación-Acción'. Este enfoque metodológico se caracteriza por:",
+                options: ["Estudiar sujetos en laboratorios aislados de su contexto social.", "Combinar la teoría y la práctica (praxis) para investigar y simultáneamente transformar la realidad social.", "Utilizar tests psicoanalíticos proyectivos en dinámicas de grupo.", "Medir los estímulos y respuestas biológicas en tiempo real."],
+                correct: 1,
+                explanation: "La Investigación-Acción de Lewin vincula teoría y praxis para intervenir y mejorar sistemas sociales mientras se investiga."
+            },
+            {
+                id: 13,
+                orientation: "Neoconductista",
+                type: "mc",
+                question: "13. La Teoría del Intercambio Social formulada por George Homans plantea que la permanencia en las relaciones interpersonales depende de:",
+                options: ["La eliminación total del conflicto mediante el Superyó.", "El equilibrio en la evaluación subjetiva entre costes y beneficios.", "La ausencia de disonancia entre los miembros.", "La imitación de la figura del líder del grupo."],
+                correct: 1,
+                explanation: "Homans postula que las interacciones humanas se basan en un balance costo-beneficio."
+            },
+            {
+                id: 14,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "14. La necesidad humana de evaluar nuestras propias opiniones y aptitudes contrastándolas con las de los demás, según Leon Festinger, se denomina:",
+                options: ["Teoría del Juicio Social", "Atribución Causal", "Comparación Social", "Comunicación Persuasiva"],
+                correct: 2,
+                explanation: "La Teoría de la Comparación Social sostiene que verificamos la idoneidad de nuestras opiniones cotejándolas con los pares."
+            },
+            {
+                id: 15,
+                orientation: "Neoconductista",
+                type: "mc",
+                question: "15. Albert Bandura demostró que un niño puede aprender conductas complejas al ver a un adulto actuar, sin recibir premios directos. Esto se conoce como:",
+                options: ["Condicionamiento Operante", "Aprendizaje Vicario o Social", "Conformidad Normativa", "Facilitación Social"],
+                correct: 1,
+                explanation: "El Aprendizaje Vicario es la adquisición de conductas mediante observación de modelos."
+            },
+            {
+                id: 16,
+                orientation: "Psicoanalítica",
+                type: "match",
+                question: "16. En la topografía freudiana del psiquismo, el 'Yo' está guiado por:",
+                options: ["El principio de placer", "El principio de realidad", "La ley del efecto", "Las normas impuestas por la sociedad"],
+                correct: 1,
+                explanation: "El Yo opera bajo el principio de realidad, mediando entre los deseos del Ello y las demandas del Superyó."
+            },
+            {
+                id: 17,
+                orientation: "Neoconductista",
+                type: "mc",
+                question: "17. Hovland y Janis enfocaron sus investigaciones neoconductistas principalmente en el estudio de:",
+                options: ["Las dinámicas de grupo en la industria.", "La comunicación persuasiva y el cambio de actitudes.", "El aprendizaje por imitación en animales.", "La atribución de responsabilidades en accidentes."],
+                correct: 1,
+                explanation: "Hovland y Janis estudiaron cómo los estímulos comunicativos incentivan la motivación del receptor para cambiar sus actitudes."
+            },
+            {
+                id: 18,
+                orientation: "Conductista",
+                type: "mc",
+                question: "18. Si un profesor quita 5 minutos de recreo (estímulo agradable) a los alumnos que hicieron desorden en el aula, está aplicando según Skinner:",
+                options: ["Castigo Positivo", "Castigo Negativo", "Refuerzo Negativo", "Extinción Clásica"],
+                correct: 1,
+                explanation: "El Castigo Negativo quita/retira un estímulo deseable (recreo) para reducir una conducta indeseada."
+            },
+            {
+                id: 19,
+                orientation: "Gestáltica",
+                type: "mc",
+                question: "19. ¿Qué disciplina relacionada con la psicología social analiza las diferencias individuales en contraste con las influencias del entorno social?",
+                options: ["Sociología", "Psicología de la Personalidad", "Antropología", "Psicología Clínica"],
+                correct: 1,
+                explanation: "La Psicología de la Personalidad analiza los rasgos individuales versus el peso del contexto."
+            },
+            {
+                id: 20,
+                orientation: "Neoconductista",
+                type: "mc",
+                question: "20. Dentro de las 5 capacidades humanas planteadas por Bandura y Walters, la capacidad que confiere un carácter propositivo e intencional a la conducta futura se denomina:",
+                options: ["Capacidad Vicaria", "Capacidad Previsora", "Capacidad Simbólica", "Capacidad Autorreguladora"],
+                correct: 1,
+                explanation: "La Capacidad Previsora permite anticipar consecuencias y proyectar metas futuras dando intención a la conducta."
+            }
+        ];
+
+        let currentQuizQuestions = [...rawQuizQuestions];
+
+        // Cases Data
+        const casesData = [
+            {
+                id: 1,
+                title: "Caso 1: El Carisma del Líder Político en la Multitud",
+                scenario: "Durante un mitin masivo, un candidato carismático apasiona a la muchedumbre. Personas normalmente pacíficas y compuestas comienzan a gritar consignas hostiles hacia los opositores, dejándose llevar por la euforia colectiva y perdiendo temporalmente sus inhibiciones individuales.",
+                question: "¿Qué autor y concepto explican por qué la multitud actúa de forma impulsiva perdiendo su sentido individual de la moral?",
+                author: "Sigmund Freud / Gustav Le Bon",
+                concept: "Psicología de las Masas y Sustitución del Superyó",
+                explanation: "En la masa social, la figura del líder pasa a ocupar el lugar del Superyó individual de los seguidores. Al ceder la guía moral al líder, las restricciones normativas del Yo/Superyó propio se relajan, permitiendo la manifestación de impulsos colectivos."
+            },
+            {
+                id: 2,
+                title: "Caso 2: Miedo a las Salas de Conferencia",
+                scenario: "Un joven profesional asistió hace un año a una reunión donde sufrió un ataque de pánico severo debido a una mala noticia médica recibida en ese instante. Actualmente, cada vez que entra a cualquier sala de conferencias corporativa (incluso estando sano y tranquilo), siente taquicardia inmediata y sudoración involuntaria.",
+                question: "¿Qué paradigma y autor explican la aparición de este malestar involuntario ante la sala?",
+                author: "Iván Pávlov",
+                concept: "Condicionamiento Clásico (EI → RI / EC → RC)",
+                explanation: "La mala noticia/dolor actuó como Estímulo Incondicionado (EI) provocando el ataque fisiológico (RI). La sala de conferencia, originalmente un ambiente neutro, se asoció al evento y se convirtió en Estímulo Condicionado (EC), desencadenando la respuesta involuntaria de ansiedad (RC)."
+            },
+            {
+                id: 3,
+                title: "Caso 3: El Dilema del Consumidor Ecológico",
+                scenario: "Valeria se considera una ferviente defensora del medio ambiente y critica abiertamente a quienes contaminan. Sin embargo, por razones de prisa, compra diariamente café en vasos de plástico de un solo uso no reciclable. Esto le genera una profunda inquietud interna, por lo que se dice a sí misma: 'Bueno, uso plástico pero yo sí separo el cartón en mi casa, así que se compensa'.",
+                question: "¿Qué concepto de la orientación Gestáltica explica la incomodidad de Valeria y su posterior justificación?",
+                author: "Leon Festinger",
+                concept: "Disonancia Cognitiva",
+                explanation: "Valeria experimenta Disonancia Cognitiva debido a la contradicción entre su creencia ('Soy ecologista') y su conducta ('Compro plástico de un solo uso'). Para reducir la tensión psicológica resultante, modifica o justifica sus cogniciones afirmando que lo compensa de otra manera."
+            },
+            {
+                id: 4,
+                title: "Caso 4: Adquisición de Modismos en Redes Sociales",
+                scenario: "Un adolescente nunca utilizaba ciertas frases o gestos particulares. Tras seguir diariamente durante tres meses a un famoso creador de contenido en TikTok, comienza a usar exactamente el mismo vocabulario, entonación y ademanes, sin haber recibido instrucción o premios directos por parte de nadie.",
+                question: "¿Qué autor y concepto explican este aprendizaje por mera observación?",
+                author: "Albert Bandura",
+                concept: "Aprendizaje Vicario / Social y Capacidad Vicaria",
+                explanation: "Bandura demostró que las personas adquieren patrones de conducta mediante la observación directa o mediática de un modelo (Aprendizaje Vicario), sin necesidad de que medie un reforzamiento directo previo."
+            },
+            {
+                id: 5,
+                title: "Caso 5: La Opinión en la Reunión de Trabajo",
+                scenario: "En una reunión de equipo, el gerente propone una estrategia que Martín sabe técnicamente que fracasará. Sin embargo, al ver que los otros 6 compañeros asienten fervientemente a favor de la propuesta, Martín decide guardar silencio y votar a favor para no desencajar ni ser visto como conflictivo.",
+                question: "¿Qué experimento y concepto de la Psicología Social representan el comportamiento de Martín?",
+                author: "Solomon Asch",
+                concept: "Conformidad Normativa",
+                explanation: "Asch demostró que la presión social explicita o implícita ejercida por una mayoría unánime lleva a los individuos a plegarse al juicio del grupo (Conformidad Normativa) por el deseo de aprobación o temor al rechazo social."
+            }
+        ];
+
+        // Feynman Data
+        const feynmanData = [
+            {
+                id: 1,
+                concept: "Disonancia Cognitiva (Leon Festinger)",
+                prompt: "Explica qué es la Disonancia Cognitiva como si se lo contaras a un niño de 10 años. Usa una analogía cotidiana sobre la alimentación o el estudio.",
+                guide: "Una buena explicación debe incluir: 1) Dos ideas o acciones que chocan entre sí, 2) La sensación de molestia o fricción mental, 3) El truco mental o excusa que inventamos para quitarnos la molestia. Ejemplo: 'Es como cuando sabes que debes hacer la tarea (Idea A), pero te quedas jugando videojuegos (Acción B). Te sientes culpable por dentro, así que te dices: Mañana me levantaré más temprano para compensar'."
+            },
+            {
+                id: 2,
+                concept: "Diferencia entre Refuerzo Negativo y Castigo Positivo (B.F. Skinner)",
+                prompt: "A la gente suele confundir el Refuerzo Negativo con el Castigo. Explica la diferencia exacta utilizando el ejemplo de un automóvil que pita cuando no te pones el cinturón.",
+                guide: "Puntos clave: 'Refuerzo' SIEMPRE busca AUMENTAR una conducta. 'Castigo' SIEMPRE busca DISMINUIR una conducta. 'Negativo' significa RETIRAR algo; 'Positivo' significa SUMAR algo. El pitido del coche al no ponerte el cinturón es una molestia que cesa cuando te abrochas el cinturón: RETIRAS el ruido desagradable para AUMENTAR la conducta de ponerte el cinturón (Refuerzo Negativo)."
+            },
+            {
+                id: 3,
+                concept: "Investigación-Acción (Kurt Lewin)",
+                prompt: "Explica el concepto de Investigación-Acción de Lewin a un compañero de universidad de otra carrera que jamás ha visto psicología.",
+                guide: "Puntos clave: Tradicionalmente la ciencia primero estudia en el laboratorio y luego publica la teoría. Lewin propone que para entender un problema social real (como el trabajo en equipo o la discriminación), debes tratar de resolverlo al mismo tiempo que lo estudias. Es unir la investigación teórica con la práctica (praxis) sobre el terreno."
+            }
+        ];
+
+        // FUNCTIONS & NAVIGATION
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active-tab'));
+
+            document.getElementById(`sec-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('active-tab');
+        }
+
+        function toggleMapDetail(id) {
+            const el = document.getElementById(`${id}-detail`);
+            if (el) {
+                el.classList.toggle('hidden');
+            }
+        }
+
+        // TABLE RENDER & FILTERS
+        function renderTable(data) {
+            const tbody = document.getElementById('comparison-table-body');
+            tbody.innerHTML = '';
+            data.forEach(row => {
+                let badgeClass = "bg-slate-100 text-slate-700";
+                if(row.orientacion === "Psicoanalítica") badgeClass = "bg-purple-100 text-purple-800";
+                if(row.orientacion === "Conductista" || row.orientacion === "Neoconductista") badgeClass = "bg-emerald-100 text-emerald-800";
+                if(row.orientacion === "Gestáltica") badgeClass = "bg-blue-100 text-blue-800";
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-slate-800">${row.autor}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold ${badgeClass}">${row.orientacion}</span></td>
+                    <td class="p-3 text-slate-700 font-medium">${row.concepto}</td>
+                    <td class="p-3 text-slate-600 text-xs">${row.ejemplo}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterTable() {
+            const query = document.getElementById('table-search').value.toLowerCase();
+            const filtered = tableData.filter(item => 
+                item.autor.toLowerCase().includes(query) ||
+                item.orientacion.toLowerCase().includes(query) ||
+                item.concepto.toLowerCase().includes(query) ||
+                item.ejemplo.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        }
+
+        function filterTableCategory(cat) {
+            if (cat === 'all') {
+                renderTable(tableData);
+            } else {
+                const filtered = tableData.filter(item => item.orientacion.includes(cat));
+                renderTable(filtered);
+            }
+        }
+
+        // QUIZ RENDER & LOGIC
+        let userAnswers = {};
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            currentQuizQuestions.forEach((q, idx) => {
+                const qCard = document.createElement('div');
+                qCard.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3";
+                
+                let badgeColor = "bg-slate-100 text-slate-700";
+                if (q.orientation === "Psicoanalítica") badgeColor = "bg-purple-100 text-purple-700";
+                if (q.orientation === "Conductista" || q.orientation === "Neoconductista") badgeColor = "bg-emerald-100 text-emerald-700";
+                if (q.orientation === "Gestáltica") badgeColor = "bg-blue-100 text-blue-700";
+
+                let optionsHTML = '';
+                q.options.forEach((opt, optIdx) => {
+                    const isSelected = userAnswers[q.id] === optIdx;
+                    optionsHTML += `
+                        <button onclick="selectOption(${q.id}, ${optIdx})" 
+                            class="w-full text-left p-3 rounded-lg border text-sm transition flex items-center justify-between ${
+                                isSelected ? 'border-indigo-600 bg-indigo-50/70 font-semibold text-indigo-900' : 'border-slate-200 hover:bg-slate-50 text-slate-700'
+                            }">
+                            <span>${opt}</span>
+                            <span class="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[10px] ${isSelected ? 'bg-indigo-600 border-indigo-600 text-white' : ''}">
+                                ${isSelected ? '✓' : ''}
+                            </span>
+                        </button>
+                    `;
+                });
+
+                const isAnswered = userAnswers[q.id] !== undefined;
+                const isCorrect = userAnswers[q.id] === q.correct;
+
+                qCard.innerHTML = `
+                    <div class="flex justify-between items-start gap-2">
+                        <span class="text-xs px-2.5 py-1 rounded-md font-bold ${badgeColor}">${q.orientation}</span>
+                        <button onclick="addToSRS('${q.question.replace(/'/g, "\\'")}', 'quiz')" class="text-xs text-amber-600 hover:text-amber-800 flex items-center gap-1">
+                            <i data-lucide="bookmark-plus" class="w-3.5 h-3.5"></i> Agregar a Repaso
+                        </button>
+                    </div>
+                    <p class="font-semibold text-slate-800 whitespace-pre-line text-sm">${q.question}</p>
+                    <div class="space-y-2 mt-2">${optionsHTML}</div>
+                    
+                    ${isAnswered ? `
+                        <div class="mt-3 p-3 rounded-lg text-xs space-y-1 ${isCorrect ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'}">
+                            <div class="font-bold flex items-center gap-1">
+                                <i data-lucide="${isCorrect ? 'check-circle-2' : 'x-circle'}" class="w-4 h-4"></i>
+                                ${isCorrect ? '¡Correcto!' : 'Respuesta Incorrecta'}
+                            </div>
+                            <p>${q.explanation}</p>
+                        </div>
+                    ` : ''}
+                `;
+                container.appendChild(qCard);
+            });
+
+            lucide.createIcons();
+            updateScore();
+        }
+
+        function selectOption(qId, optIdx) {
+            userAnswers[qId] = optIdx;
+            renderQuiz();
+        }
+
+        function updateScore() {
+            let score = 0;
+            currentQuizQuestions.forEach(q => {
+                if (userAnswers[q.id] === q.correct) {
+                    score++;
+                }
+            });
+            document.getElementById('quiz-score-display').textContent = `${score}/${currentQuizQuestions.length}`;
+        }
+
+        function shuffleAndResetQuiz() {
+            // Fisher-Yates shuffle
+            for (let i = currentQuizQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentQuizQuestions[i], currentQuizQuestions[j]] = [currentQuizQuestions[j], currentQuizQuestions[i]];
+            }
+            userAnswers = {};
+            renderQuiz();
+        }
+
+        // RENDER CASOS
+        function renderCases() {
+            const container = document.getElementById('cases-container');
+            container.innerHTML = '';
+
+            casesData.forEach(c => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4 text-purple-600"></i> ${c.title}
+                        </h4>
+                        <button onclick="addToSRS('${c.title}', 'caso')" class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md hover:bg-amber-100 flex items-center gap-1 font-medium">
+                            <i data-lucide="plus" class="w-3 h-3"></i> Marcar Difícil
+                        </button>
+                    </div>
+                    <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100 italic">"${c.scenario}"</p>
+                    <p class="text-sm font-semibold text-indigo-900">${c.question}</p>
+                    
+                    <button onclick="toggleCaseAnswer(${c.id})" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+                        <i data-lucide="eye" class="w-4 h-4"></i> Revelar Solución y Justificación
+                    </button>
+
+                    <div id="case-answer-${c.id}" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-lg text-xs text-emerald-950 space-y-2">
+                        <p><strong>Autor / Perspectiva:</strong> ${c.author}</p>
+                        <p><strong>Concepto Aplicado:</strong> ${c.concept}</p>
+                        <p class="pt-1 border-t border-emerald-200/60"><strong>Explicación:</strong> ${c.explanation}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleCaseAnswer(id) {
+            const el = document.getElementById(`case-answer-${id}`);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        // RENDER FEYNMAN
+        function renderFeynman() {
+            const container = document.getElementById('feynman-container');
+            container.innerHTML = '';
+
+            feynmanData.forEach(f => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4";
+                card.innerHTML = `
+                    <div class="border-b pb-2">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Concepto ${f.id}</span>
+                        <h4 class="font-bold text-slate-800 text-base">${f.concept}</h4>
+                    </div>
+                    <p class="text-sm text-slate-700 font-medium">${f.prompt}</p>
+                    <textarea placeholder="Escribe aquí tu explicación con tus propias palabras y analogías..." class="w-full p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none h-28"></textarea>
+                    
+                    <button onclick="toggleFeynmanGuide(${f.id})" class="text-xs bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1">
+                        <i data-lucide="check-square" class="w-4 h-4"></i> Comparar con Guía de Autoevaluación
+                    </button>
+
+                    <div id="feynman-guide-${f.id}" class="hidden bg-slate-50 border border-slate-200 p-4 rounded-lg text-xs text-slate-700 space-y-1">
+                        <span class="font-bold text-slate-900 block mb-1">Criterios para una explicación completa:</span>
+                        <p class="leading-relaxed">${f.guide}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleFeynmanGuide(id) {
+            const el = document.getElementById(`feynman-guide-${id}`);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        // SRS LOGIC
+        function addToSRS(title, origin) {
+            if (!srsItems.review24h.includes(title)) {
+                srsItems.review24h.push(title);
+                updateSRSUI();
+                alert(`"${title.substring(0, 30)}..." agregado a tu agenda de repaso en 24 Horas.`);
+            }
+        }
+
+        function promoteSRS(item, fromList, toList) {
+            srsItems[fromList] = srsItems[fromList].filter(i => i !== item);
+            if (toList) {
+                srsItems[toList].push(item);
+            }
+            updateSRSUI();
+        }
+
+        function updateSRSUI() {
+            // Update Counts
+            document.getElementById('count-24h').textContent = `${srsItems.review24h.length} items`;
+            document.getElementById('count-3d').textContent = `${srsItems.review3d.length} items`;
+            document.getElementById('count-7d').textContent = `${srsItems.review7d.length} items`;
+
+            document.getElementById('review-count').textContent = srsItems.review24h.length + srsItems.review3d.length;
+            document.getElementById('mastered-count').textContent = srsItems.review7d.length;
+
+            // Render Lists
+            renderSRSList('list-24h', srsItems.review24h, 'review24h', 'review3d', 'Mover a 3 Días');
+            renderSRSList('list-3d', srsItems.review3d, 'review3d', 'review7d', 'Mover a 7 Días');
+            renderSRSList('list-7d', srsItems.review7d, 'review7d', null, 'Dominado Totalmente');
+        }
+
+        function renderSRSList(elementId, items, currentList, nextList, nextText) {
+            const container = document.getElementById(elementId);
+            if (items.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic">No hay elementos en esta etapa.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-xs flex justify-between items-center gap-2";
+                div.innerHTML = `
+                    <span class="font-medium text-slate-800 truncate">${item}</span>
+                    <button onclick="promoteSRS('${item.replace(/'/g, "\\'")}', '${currentList}', ${nextList ? `'${nextList}'` : 'null'})" class="text-[10px] bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold px-2 py-1 rounded whitespace-nowrap">
+                        ${nextText}
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // INIT
+        window.onload = function() {
+            lucide.createIcons();
+            renderTable(tableData);
+            renderQuiz();
+            renderCases();
+            renderFeynman();
+
+            // Default items in SRS for initial demo
+            srsItems.review24h = ["Condicionamiento Clásico (EI → RI)", "Disonancia Cognitiva (Festinger)"];
+            srsItems.review3d = ["Atribución Causal (Heider)"];
+            srsItems.review7d = ["Investigación-Acción (Lewin)"];
+            updateSRSUI();
+        };
+    </script>
+</body>
+</html>
